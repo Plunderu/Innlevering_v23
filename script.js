@@ -133,8 +133,8 @@ function lagAngrep(){
 }
 
 
-
-
+//Meldefyre
+//Eivind lukter promp 
 
 
 
