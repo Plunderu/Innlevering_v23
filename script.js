@@ -22,7 +22,9 @@ let forsvar = {
 
 // Angrep
 let angrepArr = [];
-
+let skuddArr = [];
+let skuddV = -10
+/* 
 // Lager objekt for angrep
 let angrep = {
     x : feltStr,
@@ -35,7 +37,45 @@ let angrep = {
     antall : 0,
     levende: true,
     bilde : new Image()
+} */
+
+let ncols = 3
+let nrows = 2
+
+
+//"https://raw.githubusercontent.com/ImKennyYip/space-invaders/master/alien-magenta.png"
+
+function lagAngrepD(){
+    for (let c = 0; c < ncols; c++){
+         for( let r = 0; r < nrows; r++){
+              let angriper = {
+                bredde : feltStr*2,
+                hoyde : feltStr,
+                x : feltStr + c*feltStr*2,
+                y : feltStr + r*feltStr,
+                v : 6,
+                levende : true,
+                bilde : new Image(),
+                antall: 0
+             } 
+
+             angriper.bilde.src = "https://raw.githubusercontent.com/ImKennyYip/space-invaders/master/alien-magenta.png"
+            
+             //console.log(angrepArr)
+          /*    console.log(c*angrep.bredde)
+             console.log("Angriper.x: " + angriper.x)
+              */
+ 
+             angrepArr.push(angriper)
+             angriper.antall = angrepArr.length
+         }
+ 
+     }
+     //angrep.antall = angrepArr.length
+     console.log(angrepArr)
 }
+
+
 
 
 //Når nettsiden laster inn skal brettet tegnes
@@ -49,16 +89,19 @@ window.onload = function(){
     forsvar.bilde.src = "https://www.pngall.com/wp-content/uploads/13/Space-Invaders-Ship.png"
     context.drawImage(forsvar.bilde, forsvar.x,forsvar.y,forsvar.bredde,forsvar.hoyde)
 
+     //lagAngrep()
+     lagAngrepD()
+
     // Tegner angrep 
-    angrep.bilde.src = "angrep.png"
-    context.drawImage(angrep.bilde, angrep.x,angrep.y,angrep.bredde,angrep.hoyde)
+    //context.drawImage(angrepArr[0].bilde, angrepArr[0].x,angrepArr[0].y,angrepArr[0].bredde,angrepArr[0].hoyde)
     
-    lagAngrep()
-    
+   
     // Setter nettsiden til å oppdatere for å lage en animasjon 
     requestAnimationFrame(oppdater)
 
     addEventListener("keydown", flyttForsvar)
+
+    addEventListener("keyup",skyt) // Forskjellen på keyup og keydown er at man må slippe også, kan ikke skyte automatisk 
 }
 // Lager en uendelig loop med oppateringer (animasjon)
 function oppdater(){
@@ -72,21 +115,95 @@ function oppdater(){
     context.drawImage(forsvar.bilde, forsvar.x,forsvar.y,forsvar.bredde,forsvar.hoyde)
     
  
-    for(let i = 0; i < angrepArr.length; i ++){
+     for(let i = 0; i < angrepArr.length; i ++){
         angriper = angrepArr[i];
-        context.drawImage(angrep.bilde, angriper.x,angriper.y,angriper.bredde,angriper.hoyde)
-         if(angriper.levende){
-            if (angriper.x > 0 && angriper.x + angriper.bredde < brett.width) { 
+
+         /* if(angriper.levende){
+            context.drawImage(angriper.bilde, angriper.x,angriper.y,angriper.bredde,angriper.hoyde)
+            if (angrepArr[i].x > 0 && angriper.x + angriper.bredde < brett.width) { 
                 angriper.x = angriper.x + angriper.v
             }
+            // Når angrepet treffer veggene
             else{
                 angriper.v = angriper.v * -1
-                angriper.x = angriper.x + angriper.v
+                angriper.x = angriper.x + angriper.v*2
+                if (i == angrepArr.length-1){
+                
+                // Beveger angrepet en rad nærmere: 
+                for (let j = 0; j < angrepArr.length; j++){
+                    angrepArr[j].y += angriper.hoyde
+                
+                } 
+            }
            }
-        }  
+        } */
+
+        /* Didrik prøver seg */
+        context.drawImage(angriper.bilde, angriper.x,angriper.y,angriper.bredde,angriper.hoyde)
+
+        angriperLeft = angrepArr[0]
+      /*   angriperMid = angrepArr[1] */
+        angriperRight = angrepArr[angrepArr.length-1]
+       
+        console.log(angriperLeft)
+        if (angriperRight.x + angriper.bredde >= brett.width  /* || angriperLeft.x <= 0  */ ) { 
+            angriper.v *= -1
+            angriper.y += angriper.hoyde
+
         }
 
-}
+        else if ( angriperLeft.x <= 0){
+            angriper.v *= -1
+            angriperLeft.x = angriper.x + angriper.v*2
+            
+            //angriperLeft.x = -1
+/*             angriper.y += angriper.hoyde */
+            
+            //console.log(angriperLeft.x)
+            //console.log("angriperfart" + angriperLeft.v)
+
+        }
+
+        angriper.x += angriper.v
+
+        }
+
+        // Kuler 
+        for (let i = 0; i< skuddArr.length; i++){
+            skudd = skuddArr[i];
+            skudd.y += skuddV; 
+            context.fillStyle= "white";
+            context.fillRect(skudd.x,skudd.y,skudd.bredde,skudd.hoyde)
+
+            // Kulenes kollisjon med angrep 
+
+            for (let j = 0; j < angrepArr.length; j++){
+                angriper = angrepArr[j];
+                if(!skudd.brukt && angriper.levende && kollisjon(skudd, angriper)){
+                    skudd.brukt = true
+                    angriper.levende = false
+                    angrepArr.splice(j, 1) // fjerner elemetet som blir skutt 
+                    angriper.antall -= 1
+
+            
+
+                }
+
+            }
+        }
+
+        // Fjerner kulene etter at de er blitt brukt 
+
+        while(skuddArr.length > 0 && (skuddArr[0]. brukt || skuddArr[0].y < 0)){
+           skuddArr.shift() //Fjerner det første elementet i arrayet.  
+        }
+    
+    } 
+ 
+
+
+
+
 // funksjon som flytter forsvaret
 function flyttForsvar(e){
     console.log(forsvar.x)
@@ -99,18 +216,20 @@ function flyttForsvar(e){
     }
 }
 
-function lagAngrep(){
+
+ /* function lagAngrep(){
     for (let c = 0; c < angrep.kolonner; c++){
-       /*  console.log("c: " + c) */
+         console.log("c: " + c) 
         for( let r = 0; r < angrep.rader; r ++){
-            /* console.log("r:" + r) */
-/*                angrep = {
+             console.log("r:" + r) 
+               angrep = {
                 x : angrep.x + c*angrep.bredde,
                 y : angrep.y + r*angrep.hoyde,
                 bredde : angrep.bredde,
                 hoyde : angrep.hoyde,
                 levende : true 
-               } */
+               } 
+            
              angriper = {
                x : angrep.x + c*angrep.bredde,
                y : angrep.y + r*angrep.hoyde,
@@ -119,10 +238,10 @@ function lagAngrep(){
                v : 2,
                levende : true 
             } 
-            //console.log(angrepArr)
-         /*    console.log(c*angrep.bredde)
+            console.log(angrepArr)
+             console.log(c*angrep.bredde)
             console.log("Angriper.x: " + angriper.x)
-             */
+             
 
             angrepArr.push(angriper)
         }
@@ -130,15 +249,26 @@ function lagAngrep(){
     }
     angrep.antall = angrepArr.length
     console.log(angrepArr)
+} 
+  */
+function skyt(e){
+    if (e.code == "Space"){
+        let skudd ={
+            x : forsvar.x + forsvar.bredde*15/32, //hvorfor 
+            y : forsvar.y,
+            bredde : feltStr/8,
+            hoyde : feltStr/2,
+            brukt : false // sjekker om kula treffer angrep
+        }
+        skuddArr.push(skudd)
+    }
 }
 
+function kollisjon(a,b){
+    return a.x < b.x + b.bredde && // øverste venstre hjørne til a treffer ikke øverste høyre hjørne i b 
+    a.x + a.bredde > b.x && // øverste høyrne hjørne i a går forbi øverste venstre hjørne b 
+    a.y < b.y + b.hoyde && // as øverste venstre hjørne når ikke bs nederste venstre hjørne 
+    a.y + a.hoyde > b.y;// as nedre venstree hjørne går forbi bs nedre venstre hjørne 
 
-//Meldefyre
-//Eivind lukter promp 
-
-
-
-
-
-
-
+    
+}
