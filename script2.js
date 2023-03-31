@@ -9,6 +9,8 @@ let brettHoyde = feltStr*rader // 32*16
 
 let context;  // bruk av context må skjønnes 
 
+// lager knapper:
+let restartBtn = document.querySelector("#restart")
 
 // Lager objekt for forsvar
 let forsvar = {
@@ -101,13 +103,18 @@ window.onload = function(){
      lagAngrep()
        
     // Setter nettsiden til å oppdatere for å lage en animasjon 
-    requestAnimationFrame(oppdater)
+   /*  requestAnimationFrame(oppdater) */
 
     addEventListener("keydown", flyttForsvar)
 
     addEventListener("keyup",skyt) // Forskjellen på keyup og keydown er at man må slippe også, kan ikke skyte automatisk 
 
+    addEventListener("click", restart)
+
+    setInterval(oppdater, 1000/50)
+
 }
+
 
 setInterval(angrepSkudd,500) // skjer en gang i sekundet
 
@@ -117,13 +124,13 @@ function oppdater(){
 
     // for å vise at den kjøres hele tiden 
     // console.log("oppdateres")
-    if(!gameOver){ 
+/*     if(!gameOver){ 
     requestAnimationFrame(oppdater)
     }
 
     else{
         requestAnimationFrame(ferdig)
-    }
+    } */
 
 
 
@@ -275,7 +282,7 @@ function oppdater(){
         // Poeng 
         context.fillstyle = "white"
         context.font = "16px courier" 
-        context.fillText(poeng, 5,20)
+        context.fillText(poeng, 5,20) 
 
         // Sjekker om angrepet treffer forsvarer og endrer til gameover: 
         for(let i = 0; i<angrepArr.length;i++)
@@ -287,8 +294,15 @@ function oppdater(){
    /*      if(gameOver){
             ferdig()
         } */
+        end()
     
     }  
+
+    function end (){
+        if(gameOver){
+            gameOverScreen()
+        }
+    }
 
 
 
@@ -379,6 +393,18 @@ function kollisjon(a,b){
 
 }
 
+function gameOverScreen(){
+    //fyll skjermen svart
+    context.fillStyle = "#000000";
+    context.fillRect(0,0,brett.width,brett.height)
+    //game over 
+    context.font = "50px Courier";
+    context.fillStyle = "#FFFFFF"
+    context.fillText("GAME OVER", brett.width/2 - 150, brett.height/2)
+    context.font = "30px Courier"
+    context.fillText(`DIN SCORE BLE: ${poeng}`, brett.width/2 - 125, brett.height/2 + 50)
+   }
+/* 
 function ferdig(){
     context.clearRect(0,0,brett.width, brett.height) 
     context.fillStyle = "#FFFFFF"
@@ -388,4 +414,9 @@ function ferdig(){
     removeEventListener("keyup",skyt)
     angriperFart = 0 
 }
+ */
 
+function restart(){
+    console.log()
+    window.onload
+}
