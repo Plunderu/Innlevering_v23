@@ -30,6 +30,7 @@ body {
 .nav a{
     display: flex;
     align-items: center;
+
 }
 
 .navbar a {
@@ -53,9 +54,11 @@ body {
     cursor: pointer;
 }
 
-.nav.show {
+ .nav.show {
     display: flex;
-}
+    align-items: center;
+    
+} 
 
 .navbar a:hover {
     background-color: #9900cc;
