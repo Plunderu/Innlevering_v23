@@ -8,6 +8,7 @@ body {
     background-color: #6600cc;
     display: flex;
     justify-content: space-between;
+    width: 100%;
 }
 
 .logo {
@@ -24,6 +25,11 @@ body {
 .nav {
     display: flex;
     justify-content: space-around;
+}
+
+.nav a{
+    display: flex;
+    align-items: center;
 }
 
 .navbar a {

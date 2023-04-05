@@ -1,39 +1,37 @@
+body{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+h1{
+    color: white;
+}
 .sentrert{
     text-align: center;
 }
-table {
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+#leaderBoard {
     border-collapse: collapse;
-    font-size: 18px;
-    margin: 20px auto;
+    font-size: 20px;
+    margin-top: 10%;
+    width: 50%; 
+    color: white;
 }
 
 th, td {
-    border: 2px solid black;
+    border: 2px solid whitesmoke;
     padding: 3px;
 }
 
+
 thead{
-    background: lightgreen;
+    background:#6600cc ;
 }
-tbody tr{
-    background-color: lightyellow;
+tbody{
+    background-color: #9900cc;
 }
-tbody tr:nth-child(odd) {
-    background-color: azure;
+tbody:nth-child(odd) {
+    background-color: #cc00cc;
 
-}
-h1, h2 {
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-}
-/* påvirker første p-element som kommer etter et h2 element */
-h2 + p {
-    font-style: italic;
-}
-
-/* Påvirker alle p-element etter h2 */
-h2 ~ p {
-    font-family: Arial, Helvetica, sans-serif;
 }
 
 .vis{

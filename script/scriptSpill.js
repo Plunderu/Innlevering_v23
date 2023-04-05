@@ -1,16 +1,3 @@
- // Js for responsiv navbar
- /* Henter hamburgerelementet */
-const burgerEl = document.querySelector('.fa-bars')
-
-/* Henter navelementet */
-const navEl = document.querySelector('.nav')
-
-burgerEl.addEventListener('click', showNav)
-
-function showNav(){
-    navEl.classList.toggle('show')
-        }
-
 
 // Brettet: 
 let feltStr = 32;
@@ -24,7 +11,7 @@ let brettHoyde = feltStr*rader // 32*16
 let context;  // bruk av context må skjønnes 
 
 // lager knapper:
-let startBtn = document.querySelector("#start")
+/* let startBtn = document.querySelector("#start") */
 let restartBtn = document.querySelector("#restart")
 let volumBtn = document.querySelector("#volum")
 let lagreBtn = document.querySelector("#lagre")
@@ -86,9 +73,6 @@ let gameOver = false
 // Volum
 let volum = false
 
-// Leaderboard
-
-
 
 
 
@@ -114,10 +98,13 @@ function lagAngrep(){
  
      }
 }
-startBtn.addEventListener("click", gameStart)
+
+/* startBtn.addEventListener("click", gameStart) */
 
 //Når nettsiden laster inn skal brettet tegnes
 //window.onload = function(){
+
+
 function gameStart(){
     console.log("start")
     brett = document.getElementById("brett");
@@ -147,7 +134,7 @@ function gameStart(){
 
     leggTilBtn.addEventListener("click", leggTil)
 
-    startBtn.classList.add("gjem")
+    /* startBtn.classList.add("gjem") */
     restartBtn.classList.remove("gjem")
     restartBtn.classList.add("vis")
 
@@ -155,10 +142,9 @@ function gameStart(){
     volumBtn.classList.add("vis")
 
     setInterval(oppdater, 1000/50)
-
-
-
 }
+
+gameStart()
 
 
 
@@ -374,8 +360,6 @@ function oppdater(){
             angrepArr = [] // tømmer angrepArr
             skuddArr = [] //tømmer skuddArr hvorfor
             lagAngrep()
-            console.log("angrepkolonner"+angrepK)
-            console.log("angreprader"+angrepR)
         }
 
         // Poeng 
@@ -383,16 +367,14 @@ function oppdater(){
         context.font = "16px courier" 
         context.fillText(poeng, 5,20) 
 
-        // Sjekker om angrepet treffer forsvarer og endrer til gameover: 
+ /*        // Sjekker om angrepet treffer forsvarer og endrer til gameover: 
         for(let i = 0; i<angrepArr.length;i++)
             angriper = angrepArr[i]
         if(angriper.y >= forsvar.y ){
             gameOver = true
+            console.log("gameover")
         }
-
-   /*      if(gameOver){
-            ferdig()
-        } */
+ */
         end()
     
     }  
@@ -408,10 +390,6 @@ function oppdater(){
 
 // funksjon som flytter forsvaret
 function flyttForsvar(e){
-/*    if(gameOver){
-        ferdig()        
-}
-     */
     if(e.code == "ArrowLeft" && forsvar.x - forsvar.v >= 0){
         forsvar.x  -= forsvar.v
 
@@ -459,20 +437,6 @@ function skyt(e){
         }
     }
 
-
-/* function bombe(e){
-    if (e.code == "Enter"){
-        let bombe = {
-            x : forsvar.x + forsvar.bredde*15/32, //hvorfor 
-            y : forsvar.y,
-            bredde : feltStr/2,
-            hoyde : feltStr/2,
-            brukt : false // sjekker om kula treffer angrep
-        }
-        bombeArr.push(bombe)
-    }
-} */
-
 function angrepSkudd(){  
         let tilfeldig = Math.floor(Math.random()*angrepArr.length) 
         let angriperSkudd ={
@@ -498,6 +462,11 @@ function kollisjon(a,b){
 function gameOverScreen(){
     lagreBtn.classList.remove("gjem")
     lagreBtn.classList.add("vis")
+
+
+    removeEventListener("keydown", flyttForsvar)
+    removeEventListener("keyup",skyt) // Forskjellen på keyup og keydown er at man må slippe også, kan ikke skyte automatisk 
+
     //fyll skjermen svart
     context.fillStyle = "#000000";
     context.fillRect(0,0,brett.width,brett.height)
@@ -512,24 +481,12 @@ function gameOverScreen(){
    }
 
 
-/* 
-function ferdig(){
-    context.clearRect(0,0,brett.width, brett.height) 
-    context.fillStyle = "#FFFFFF"
-    context.font = "100px courier"
-    context.fillText =("Gameover",300,300)
-    removeEventListener("keydown", flyttForsvar)
-    removeEventListener("keyup",skyt)
-    angriperFart = 0 
-}
- */
 // Funksjoner til knappene 
 
 function restart(){
-    window.location.reload()
-    startBtn.removeEventListener()
-    startBtn.classList.add("gjem")
-    gameStart()
+     window.location.reload()
+
+
 
 }
 
@@ -551,12 +508,9 @@ function lagre(){
     leggTilBtn.classList.add("vis")
 }
 
- let brukerArr = []
+
 function leggTil(){
-    let bruker = localStorage.setItem(`${navnEl.value}`, poeng)
+    localStorage.setItem(`${navnEl.value}`, poeng)
     leggTilBtn.innerHTML= `Din score ble lagt til!`
-
-    brukerArr.push(bruker)
-
 } 
 

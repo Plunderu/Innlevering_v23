@@ -9,9 +9,9 @@ body{
     
 }
 
-.navbar{
+/* .navbar{
     width: 100%;
-}
+} */
 
 #brett{
     margin-top: 5%;
@@ -23,6 +23,7 @@ body{
     display: flex;
     justify-content: center;
     width: 512px;
+
 }
 
 #start{
@@ -89,12 +90,8 @@ body{
 
 }
 
-/* Brukes for å få lagreknapp til å blinke */
-.rod{
-    background-color: red;
-}
-
 /* Hoverfunksjon */
+
 
 #restart:hover{
     cursor: pointer;
@@ -116,6 +113,10 @@ body{
     background-color: #9900cc;
 }
 
+#start:hover{
+    cursor: pointer;
+    background-color: #9900cc;
+}
 
 /* Gjemmer og viser lagreknapp */
 .vis{
