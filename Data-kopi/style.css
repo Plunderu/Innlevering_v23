@@ -1,0 +1,59 @@
+body{
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0px;
+}
+h1{
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+main{
+    text-align: center;
+    margin: 20px;
+}
+section{
+    display: grid;
+    /* 1 fr står for fraction. Fraction er en del av den tilgjengelige plassen. */
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 10px;
+    
+}
+
+section > article > img{
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+header > nav{
+    background-color: rgb(0, 0, 0);
+    display: flex;
+    justify-content: space-evenly;
+
+}
+
+header > nav > a{
+    color: rgb(255,255,255);
+    padding: 10px;
+    text-decoration: none;
+    flex: 1;
+    text-align: center;
+}
+
+header > nav > a:hover{
+    background-color: rgb(255,0,0);
+
+}
+
+/* Media query gjør nettsiden mer kompatibel på flere skermer. 
+Dette kan gjøres ved at vi endrer antall kolonner i grid for ulike skjermstørrelser.  */
+@media(max-width: 550px){
+    /* endrer grid til å være på to kolonner */
+    section{
+        grid-template-columns: repeat(2,1fr);
+    }   
+}
+
+@media(max-width: 400px){
+    section{
+        grid-template-columns: repeat(1, 1fr);
+    }
+}
