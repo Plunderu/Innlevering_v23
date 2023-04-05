@@ -170,11 +170,13 @@ function oppdater(){
     context.clearRect(0,0,brett.width, brett.height) // Klarerer lerretet for hver gang 
 
         // Tegner blokk så lenge de ikke er truffet av angrep 
-        if(!odelagt){
-            context.fillStyle = "blueviolet"
-            context.fillRect(blokk1.x ,blokk1.y,blokk1.bredde,blokk1.hoyde)
-            context.fillRect(blokk2.x ,blokk2.y,blokk2.bredde,blokk2.hoyde)
-        }
+
+
+        if(angriperDreptArr.length >=5){
+            context.fillStyle = "white"
+            context.font = "16px courier" 
+            context.fillText("Press Enter", 395, 492) 
+        }    
 
         
         // Sjekker om noen av angriperne treffer blokkade og fjerner den 
@@ -282,17 +284,17 @@ function oppdater(){
                          console.log("treff")
                      }
                  }
-                 for(let i = 0; i< skuddArr.length; i++){
-                     let skudd = skuddArr[i]
-                     if(!odelagt && kollisjon(skudd,blokk1) || !odelagt && kollisjon(skudd,blokk2)){
-                         skudd.v *= -1 
+                 for(let i = 0; i< bombeArr.length; i++){
+                     let bombe = bombeArr[i]
+                     if(!odelagt && kollisjon(bombe,blokk1) || !odelagt && kollisjon(bombe,blokk2)){
+                         bombe.v *= -1 
                      }
-                     if(skudd.y > brettHoyde){ //Dersom skuddet truffet blokkade ikke treffer forsvarer resettes skuddv 
-                         skudd.brukt = true
-                         skudd.v *= -1
+                     if(bombe.y > brettHoyde){ //Dersom skuddet truffet blokkade ikke treffer forsvarer resettes skuddv 
+                         bombe.brukt = true
+                         bombe.v *= -1
                      }
-                     if(kollisjon(skudd,forsvar) && skudd.v>0){
-                         skudd.brukt = true // Fjerner skuddet etter kollisjon 
+                     if(kollisjon(bombe,forsvar) && bombe.v>0){
+                         bombe.brukt = true // Fjerner skuddet etter kollisjon 
                          gameOver = true 
                      }
                  }
@@ -374,7 +376,14 @@ function oppdater(){
             gameOver = true
             console.log("gameover")
         }
- */
+         */
+
+                if(!odelagt){
+            context.fillStyle = "#6600cc"
+            context.fillRect(blokk1.x ,blokk1.y,blokk1.bredde,blokk1.hoyde)
+            context.fillRect(blokk2.x ,blokk2.y,blokk2.bredde,blokk2.hoyde)
+        }
+
         end()
     
     }  
@@ -422,6 +431,8 @@ function skyt(e){
  
         skuddArr.push(skudd)
     }
+
+
 
     if(e.code == "Enter" && angriperDreptArr.length >= 5){
             let bombe = {

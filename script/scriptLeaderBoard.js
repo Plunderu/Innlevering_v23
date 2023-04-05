@@ -1,24 +1,14 @@
 const leaderBoardEl = document.querySelector("#leaderBoard")
 
-/* let brukerArr = []
-for(let i = 0; i<localStorage.length; i++){
-    console.log(localStorage.getItem[i])
-}
-console.log(localStorage)
-leaderBoardEl.innerHTML += `<tr>
-<td>1</td>
-<td>${localStorage.getItem("Eirik")}</td>
-<td></td>
-</tr>`   */
-
 
 function allLagring() {
 
-    let arkiv = [],
-        keys = Object.keys(localStorage),
-        i = 0, key;
+    let arkiv = []
+    let keys = Object.keys(localStorage)
 
-    for (; key = keys[i]; i++) { //Dette må skjønnes
+    let key
+
+    for (let i = 0; key = keys[i]; i++) { //Dette må skjønnes
         arkiv.push( [key, Number(localStorage.getItem(key))]);
     }
 
@@ -40,7 +30,7 @@ function sorter(array) {
     
     console.log(brukerArr)
 
-    for(let i = 0; i<brukerArr.length;i++){
+    for(let i = 0; i<brukerArr.length && i<20;i++){ //Legger til de 20 beste poengene i tabellen. 
         leaderBoardEl.innerHTML += 
         `<tr>
             <td id="plass">${i+1}</td>
