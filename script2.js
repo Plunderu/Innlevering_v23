@@ -537,4 +537,6 @@ function leggTil(){
     localStorage.setItem(`${navnEl.value}`, poeng)
     leggTilBtn.innerHTML= `Din score ble lagt til!`
 
+    
+
 }
