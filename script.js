@@ -1,3 +1,17 @@
+ // Js for responsiv navbar
+ /* Henter hamburgerelementet */
+const burgerEl = document.querySelector('.fa-bars')
+
+/* Henter navelementet */
+const navEl = document.querySelector('.nav')
+
+burgerEl.addEventListener('click', showNav)
+
+function showNav(){
+    navEl.classList.toggle('show')
+        }
+
+
 // Brettet: 
 let feltStr = 32;
 let rader = 16; 
@@ -17,7 +31,8 @@ let lagreBtn = document.querySelector("#lagre")
 
 let inputEl = document.querySelector("#input")
 let navnEl = document.querySelector("#navn")
-let leggTilBtn = document.querySelector("#leggTil")
+let leggTilBtn = document.querySelector("#leggTil") 
+
 
 // Lager objekt for forsvar
 let forsvar = {
@@ -70,6 +85,9 @@ let gameOver = false
 
 // Volum
 let volum = false
+
+// Leaderboard
+
 
 
 
@@ -533,10 +551,12 @@ function lagre(){
     leggTilBtn.classList.add("vis")
 }
 
+ let brukerArr = []
 function leggTil(){
-    localStorage.setItem(`${navnEl.value}`, poeng)
+    let bruker = localStorage.setItem(`${navnEl.value}`, poeng)
     leggTilBtn.innerHTML= `Din score ble lagt til!`
 
-    
+    brukerArr.push(bruker)
 
-}
+} 
+
