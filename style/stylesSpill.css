@@ -20,7 +20,6 @@ body{
 }
 
 #kontroller{
-    display: flex;
     width: 100%;
 }
 
@@ -158,11 +157,11 @@ body{
 }
 
 /* Gjemmer og viser lagreknapp */
-.vis{
-    display: flex;
-}
 .gjem{
     display: none;
+}
+.vis{
+    display: flex;
 }
 
 @media(max-width: 512px){

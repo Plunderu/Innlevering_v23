@@ -116,8 +116,8 @@ function gameStart(){
 
     if(window.innerWidth<=brettBredde){
         brettBredde = window.innerWidth
-        kontrollBtns.classList.remove("gjem")
-        kontrollBtns.classList.add("vis")
+       kontrollBtns.classList.add("vis")
+       kontrollBtns.classList.remove("gjem")
         hoyreBtn.addEventListener("click",flyttForsvarHoyre)
         venstreBtn.addEventListener("click",flyttForsvarVenstre)
         skytBtn.addEventListener("click", skytMobil)
