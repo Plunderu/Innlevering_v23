@@ -175,7 +175,7 @@ function oppdater(){
         // Tegner blokk så lenge de ikke er truffet av angrep 
 
 
-        if(angriperDreptArr.length >=5){
+        if(angriperDreptArr.length >=5 && window.innerWidth>= feltStr*kolonner){
             context.fillStyle = "white"
             context.font = "16px courier" 
             context.fillText("Press Enter", brettBredde - 117, brettHoyde-20) 
@@ -277,6 +277,7 @@ function oppdater(){
                      if(!bombe.brukt && angriper.levende && kollisjon(bombe, angriper)){
                          bombe.brukt = true
                          angriper.levende = false
+                         angrepR-=1
                          angrepArr.splice(j, 3) // fjerner elemetet som blir skutt 
                          angriper.antall -= 3
                          poeng += 300
@@ -290,7 +291,6 @@ function oppdater(){
                  for(let i = 0; i< bombeArr.length; i++){
                      let bombe = bombeArr[i]
                      if(!odelagt && kollisjon(bombe,blokk1) || !odelagt && kollisjon(bombe,blokk2)){
-                        console.log("bombe")
                          bombeV *= -1 
                      }
                      if(bombe.y > brettHoyde){ //Dersom skuddet truffet blokkade ikke treffer forsvarer resettes skuddv 
@@ -373,14 +373,13 @@ function oppdater(){
         context.font = "16px courier" 
         context.fillText(poeng, 5,20) 
 
- /*        // Sjekker om angrepet treffer forsvarer og endrer til gameover: 
+       // Sjekker om angrepet treffer forsvarer og endrer til gameover: 
         for(let i = 0; i<angrepArr.length;i++)
             angriper = angrepArr[i]
         if(angriper.y >= forsvar.y ){
             gameOver = true
-            console.log("gameover")
         }
-         */
+         
 
                 if(!odelagt){
             context.fillStyle = "#6600cc"
