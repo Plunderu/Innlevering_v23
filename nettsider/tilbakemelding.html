@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tilbakemelding</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <link rel="stylesheet" href="/style/styleFelles.css">
+    <link rel="stylesheet" href="/style/styleTilbakemelding.css">
+</head>
+<body>
+    <div class="navbar">
+        <div class="logo">
+            <a href="/index.html"><img src="https://raw.githubusercontent.com/ImKennyYip/space-invaders/master/alien-magenta.png" alt="Angriperbilde" id="logoBilde"></a>
+
+            <i class="fa-solid fa-bars"></i>
+        </div>
+        <div class="nav"> 
+            <a href="spill.html">Spill</a>
+            <a href="leaderBoard.html">LeaderBoard</a>
+            <a href="tilbakemelding.html">Tilbakemelding</a>
+        </div>
+    </div>
+    <main>
+    <h1>Tilbakemelding</h1>
+
+    <h2>Hvem er du?</h2>
+    <h3>Kjønn</h3>
+    <form action="">
+    <label for="">
+        <input type="radio" value="mann" name="kjonn" checked>Mann 
+    </label>
+    <label for="">
+        <input type="radio" name="kjonn" value="kvinne">Kvinne
+    </label>
+    <label for="">
+        <input type="radio" name="kjonn" value="annet">Annet
+    </label>
+
+    <h3>Hvor har du hørt om spillet?</h3>
+    <label>
+        <input type="checkbox" value="skole">Skole
+    </label>
+    <label>
+        <input type="checkbox" value="venner">Venner
+    </label>
+    <label>
+        <input type="checkbox" value="familie">Familie
+    </label>
+    <label>
+        <input type="checkbox" value="nettet">Nettet 
+    </label>
+    <label>
+        <input type="checkbox" value="annet">Annet
+    </label>
+
+
+    <h3>Ferdighetsnivå</h3>
+    <select>
+        <option value="pro">Pro</option>
+        <option selected value="medium">Medium</option>
+        <option value="noob">Noob</option>
+        <option value="fizzymama">FizzyMama</option>
+        </select>
+
+        <h3>Hva kan forbedres?</h3>
+        <textarea cols="30" rows="5" placeholder="Annen informasjon.."></textarea>
+    </form>
+
+    <button type="submit">Send inn</button>
+    <script src="/script/scriptFelles.js"></script>
+    <script src="/script/scriptTilbakemelding.js"></script>
+</main>
+</body>
+</html>

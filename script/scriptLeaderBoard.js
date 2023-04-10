@@ -8,12 +8,17 @@ function allLagring() {
 
     let key
 
-    for (let i = 0; key = keys[i]; i++) { //Dette må skjønnes
-        arkiv.push( [key, Number(localStorage.getItem(key))]);
+        for (let i = 0; key = keys[i]; i++) { //Dette må skjønnes
+            if(keys[i] !== "Tilbakemelding"){ //Fjerner tilbakemeldingslagringen fra leaderboard
+                arkiv.push( [key, Number(localStorage.getItem(key))]);
+            }
+            
+        }
+    
+        return arkiv;
     }
 
-    return arkiv;
-}
+
 
 let brukerArr = allLagring()
 

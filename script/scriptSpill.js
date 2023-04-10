@@ -251,17 +251,23 @@ function oppdater(){
             }
             for(let i = 0; i< skuddArr.length; i++){
                 let skudd = skuddArr[i]
+                if(!odelagt && ((blokk1.x< skudd.x && skudd.x < blokk1.x + blokk1.bredde) || (blokk2.x < skudd.x && skudd.x < blokk2.x + blokk2.bredde))){ // HVis det skytes ett skudd som vil treffe blokk kan man ikke skyte igjen før skuddet er ute av spillet
+                    removeEventListener("keyup",skyt)
+                }
                 if(!odelagt && kollisjon(skudd,blokk1) || !odelagt && kollisjon(skudd,blokk2)){
-                    console.log(i)
                     skudd.v *= -1
                 }
                 if(skudd.y > brettHoyde){ //Dersom skuddet truffet blokkade ikke treffer forsvarer resettes skuddv 
                     skudd.brukt = true
                     skudd.v *= -1
+                    addEventListener("keyup",skyt)
                 }
                 if(kollisjon(skudd,forsvar) && skudd.v>0){
                     skudd.brukt = true // Fjerner skuddet etter kollisjon 
                     gameOver = true 
+                }
+                if(odelagt){
+                    addEventListener("keyup",skyt) //fjerner bugg hvis man skyter når angriperne ødelegger blokk
                 }
             }
  }
