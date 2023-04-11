@@ -23,27 +23,30 @@
             <a href="./tilbakemelding.html">Tilbakemelding</a>
         </div>
     </div>
-        <canvas id="brett"></canvas>
 
-    <div id="kontroller" class="gjem">
-        <button id="venstre" aria-label="venstreknapp"><i class="fa-solid fa-left-long"></i></button>
-        <button id="skyt" aria-label="skytknapp"><i class="fa-solid fa-gun"></i></button>
-        <button id="hoyre" aria-label="hoyreknapp" ><i class="fa-solid fa-right-long"></i></button>
+    <!-- HTML-Elementet som spillet skal spilles i -->
+    <canvas id="brett"></canvas> 
 
-    </div>    
-    <div id="knapper">
-<!--         <button id="start" class="vis" aria-label="startknapp"><i class="fa-solid fa-play"></i></button> -->
-        <button id="restart" aria-label="restartknapp"class="gjem"><i class="fa-solid fa-arrows-rotate"></i></button>
-        <button id="volum" aria-label="volumknapp" class="gjem" ><i class="fa-solid fa-volume-xmark"></i></button>
-
+    <!-- Legger til HTML-elementer for mobilkontroll med defaultklasse gjem -->
+    <div id="kontrollerMobil" class="gjem"> 
+        <button id="venstre" aria-label="venstreknapp" class="knapp"><i class="fa-solid fa-left-long"></i></button>
+        <button id="skyt" aria-label="skytknapp" class="knapp"><i class="fa-solid fa-gun"></i></button>
+        <button id="hoyre" aria-label="hoyreknapp"  class="knapp"><i class="fa-solid fa-right-long"></i></button>
+    </div>   
+    
+    <!-- Restart og Volumknapp -->
+    <div id="restartVolum"> <!-- Legger restart og volum inne i en div for å kunne plassere de ved siden av hverandre -->
+        <button id="restart" aria-label="restartknapp" class="knapp"><i class="fa-solid fa-arrows-rotate"></i></button>
+        <button id="volum" aria-label="volumknapp" class="knapp" ><i class="fa-solid fa-volume-xmark"></i></button>
     </div>
 
-    <button id="lagre" aria-label="lagreknapp" class="gjem"> <i class="fa-solid fa-download"></i> </button>
+    <!-- Lagreknapp og inputfelt til navn for registrering av HighScore. Defaultklasse gjem. -->
+    <button id="lagre" aria-label="lagreknapp" class="knapp gjem"> <i class="fa-solid fa-download"></i> </button>
+
     <div id="input" class="gjem">
         <p>Skriv inn navnet ditt: <input id="navn" type="text"></p>
     </div>
     <button id="leggTil" aria-label="leggtilknapp"class="gjem" >Legg til i Leaderboard</button>
-
 
     <script src="../script/scriptFelles.js"></script>
     <script src="../script/scriptSpill.js"></script>

@@ -1,20 +1,18 @@
+//Henter Leaderboardtabellen fra DOM 
 const leaderBoardEl = document.querySelector("#leaderBoard")
 
-
+// Funksjon som henter ut all lagring fra Local Storage, Bortsett fra Tilbakemelding
 function allLagring() {
-
-    let arkiv = []
-    let keys = Object.keys(localStorage)
-
+    let arkiv = [] // Definerer et tomt array 
+    let keys = Object.keys(localStorage) // Setter at keys er Keyen til Localstorage Objektet
     let key
 
-        for (let i = 0; key = keys[i]; i++) { //Dette må skjønnes
+        for (let i = 0; key = keys[i]; i++) { // Itererer gjennom Local Sotrage 
             if(keys[i] !== "Tilbakemelding"){ //Fjerner tilbakemeldingslagringen fra leaderboard
-                arkiv.push( [key, Number(localStorage.getItem(key))]);
+                arkiv.push([key, Number(localStorage.getItem(key))]); // Pusher lagring i Local Storage inn i arkivArray som et array inne i et array der key er første index og poengsum andre
             }
             
         }
-    
         return arkiv;
     }
 
@@ -22,18 +20,16 @@ function allLagring() {
 
 let brukerArr = allLagring()
 
-//write a function to sort a two-dimensinal array by the second element
+// Funksjon som sorterer et array på det andre index. 
 
 function sorter(array) {
-    array.sort(function(a, b) {
+    array.sort(function(a, b) { //Uten denne funksjonen ville sorter funksjonen sortert local storagen etter alfabetisk rekkefølge, grunnet det er det som er første index i arrayet. 
         return b[1] - a[1];
      });
     
     }
     
     sorter(brukerArr)
-    
-    console.log(brukerArr)
 
     for(let i = 0; i<brukerArr.length && i<20;i++){ //Legger til de 20 beste poengene i tabellen. 
         leaderBoardEl.innerHTML += 

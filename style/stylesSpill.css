@@ -6,12 +6,10 @@ body{
     font-family: 'Courier New', Courier, monospace;
     flex-direction: column;
     align-items: center;
+    margin-bottom: 5%;
     
 }
 
-/* .navbar{
-    width: 100%;
-} */
 
 #brett{
     margin-top: 5%;
@@ -19,95 +17,73 @@ body{
 
 }
 
-#kontroller{
+#kontrollerMobil{
     width: 100%;
 }
 
-#hoyre{
+.knapp{
     font-size: 50px;
     width: 50%;
     padding: 10px;
     justify-content: center;
     align-items: center;
+    background-color: #6600cc;  
+    cursor: pointer;
+}
+
+#hoyre{
+    width: 50%;
     border-bottom: 2.5px solid black;
     border-right: 5px solid black;
     border-left: 2.5px solid black;
-    background-color: #6600cc;
 }
 #venstre{
-    font-size: 50px;
     width: 50%;
-    padding: 10px;
-    justify-content: center;
-    align-items: center;
     border-bottom: 2.5px solid black;
     border-right: 2.5px solid black;
     border-left: 5px solid black;
-    background-color: #6600cc;
 }
 #skyt{
-    font-size: 50px;
     width: 50%;
-    padding: 10px;
-    justify-content: center;
-    align-items: center;
     border-bottom: 2.5px solid black;
     border-right: 2.5px solid black;
     border-left: 2.5px solid black;
-    background-color: #6600cc;
 }
 
- #knapper{
+ #restartVolum{
     display: flex;
     justify-content: center;
     width: 512px;
-
 }
 
  
  #restart{
-    font-size: 50px;
     width: 50%;
-    padding: 10px;
-    justify-content: center;
-    align-items: center;
     border-bottom: 2.5px solid black;
     border-right: 2.5px solid black;
     border-left: 5px solid black;
-    background-color: #6600cc;
+
 }
 
 #volum{
-    font-size: 50px;
     width: 50%;
-    padding: 10px;
-    justify-content: center;
-    align-items: center;
     border-bottom: 2.5px solid black;
     border-right: 5px solid black;
     border-left: 2.5px solid black;
-    background-color: #6600cc;
 }
 
 
 
 #lagre{
-    font-size: 50px;
-    padding: 10px;
     width: 512px;
-    justify-content: center;
-    align-items: center;
     border-top: 2.5px solid black;
     border-bottom: 5px solid black;
     border-left: 5px solid black;
     border-right: 5px solid black;
-    background-color: #6600cc;
-
 } 
 
 #input{
     color: white;
-
 }
 
 #leggTil{
@@ -118,35 +94,17 @@ body{
 
 }
 
-/* Hoverfunksjon */
+#footer{
+    width: 1vw;
+}
 
-
-#restart:hover{
+.knapp:hover{
     cursor: pointer;
     background-color: #9900cc;
 }
 
-#volum:hover{
-    cursor: pointer;
-    background-color: #9900cc;
-}
 
-#lagre:hover{
-    cursor: pointer;
-    background-color: #9900cc;
-}
-
-#leggTil:hover{
-    cursor: pointer;
-    background-color: #9900cc;
-}
-
-#start:hover{
-    cursor: pointer;
-    background-color: #9900cc;
-}
-
-/* Gjemmer og viser lagreknapp */
+/* Gjemmer og viser knapper */
 .gjem{
     display: none;
 }
@@ -155,15 +113,14 @@ body{
 }
 
 @media(max-width: 512px){
-    /* endrer grid til å være på to kolonner */
 
     body{
-        touch-action: manipulation; 
+        touch-action: manipulation; /* Fikser slik at det ikke zoomes inn når man dobbeltrykker på mobil */
     }
     #brett{
         margin-top: 0%;
     }
-    #knapper{
+    #restartVolum{
         width: 100% ;
     }
     #lagre{

@@ -6,6 +6,7 @@
 
         burgerEl.addEventListener('click', showNav)
 
+        //Funksjon som legger til CSSklassen Show til Navbar
         function showNav(){
             navEl.classList.toggle('show')
         }

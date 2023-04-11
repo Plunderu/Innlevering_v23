@@ -1,5 +1,5 @@
 
-// Brettet: 
+// Definerer  Spillbrettet: 
 let feltStr = 32;
 let rader = 16; 
 let kolonner = 16; 
@@ -8,10 +8,9 @@ let kolonner = 16;
 let brettBredde = feltStr*kolonner // 32*16
 let brettHoyde = feltStr*rader // 32*16
 
-let context;  // bruk av context må skjønnes 
+let context;  
 
 // lager knapper:
-/* let startBtn = document.querySelector("#start") */
 let restartBtn = document.querySelector("#restart")
 let volumBtn = document.querySelector("#volum")
 let lagreBtn = document.querySelector("#lagre")
@@ -21,7 +20,7 @@ let navnEl = document.querySelector("#navn")
 let leggTilBtn = document.querySelector("#leggTil") 
 
 //DOm for mobilspill
-let kontrollBtns = document.querySelector("#kontroller")
+let kontrollBtns = document.querySelector("#kontrollerMobil")
 let hoyreBtn = document.querySelector("#hoyre")
 let venstreBtn = document.querySelector("#venstre")
 let skytBtn = document.querySelector("#skyt")
@@ -37,7 +36,7 @@ let forsvar = {
     bilde : new Image()
 }
 
-// blokk1 
+// blokkader 
 let blokk1 = {
     x : brettBredde/5.33,
     y : brettHoyde/2,
@@ -52,7 +51,8 @@ let blokk2 = {
     hoyde : brettHoyde/16,
 }
 
-let odelagt = false //Variabel som sjekker om blokkene treffes av angrep
+//Variabel som sjekker om blokkene treffes av angrep
+let odelagt = false 
 
 // Angrep
 let angrepArr = [];
@@ -61,30 +61,28 @@ let angriperDreptArr = []
 let angrepK = 3
 let angrepR = 2
 let angriperFart = 6
+let angriperSkuddv = 3
 
+//Bombe
 let bombeArr = []
 let bombeV = -4
-
-let angriperSkuddv = 3
 
 // Skudd
 let skuddArr = [];
 let skuddV = -10
 let antallSkudd = 0
 
-// Poeng: 
+// Poeng
 let poeng = 0 
 let gameOver = false
 
-// Volum
+// Volumvariabel som default settes til å være av 
 let volum = false
 
-
-
-
+//Lager angrepet
 function lagAngrep(){
-    for (let c = 0; c < angrepK; c++){
-         for( let r = 0; r < angrepR; r++){
+    for (let c = 0; c < angrepK; c++){ //Så lenge C er mindre enn AngrepKolonner, som til å begynne med er 3, dannes det rader med angripere. 
+         for(let r = 0; r < angrepR; r++){ //Når C er 1,2 og 3 dannes det en to rader med angripere
               let angriper = {
                 bredde : feltStr*2,
                 hoyde : feltStr,
@@ -105,23 +103,22 @@ function lagAngrep(){
      }
 }
 
-/* startBtn.addEventListener("click", gameStart) */
-
-//Når nettsiden laster inn skal brettet tegnes
-//window.onload = function(){
-
-
+//Funksjon til å starte spillet
 function gameStart(){
-    brett = document.getElementById("brett");
+    brett = document.getElementById("brett"); //Henter spillelementet fra DOM
 
+    //Sjekker om bredden til skjermen er mindre enn bredden til spillcanvas. Dersom den er det får mobilkontrollene klassen show. 
     if(window.innerWidth<=brettBredde){
         brettBredde = window.innerWidth
-       kontrollBtns.classList.add("vis")
-       kontrollBtns.classList.remove("gjem")
+        blokk1.x -=30
+        blokk2.x -= (512 - (window.innerWidth +30))
+        kontrollBtns.classList.add("vis")
+        kontrollBtns.classList.remove("gjem")
         hoyreBtn.addEventListener("click",flyttForsvarHoyre)
         venstreBtn.addEventListener("click",flyttForsvarVenstre)
         skytBtn.addEventListener("click", skytMobil)
     }
+
     brett.width = brettBredde;
     brett.height = brettHoyde;
 
@@ -131,40 +128,29 @@ function gameStart(){
     forsvar.bilde.src = "https://www.pngall.com/wp-content/uploads/13/Space-Invaders-Ship.png"
     context.drawImage(forsvar.bilde, forsvar.x,forsvar.y,forsvar.bredde,forsvar.hoyde)
 
-     //lagAngrep()
+     // Kaller på funksjonen som lager angrepet 
      lagAngrep()
-       
-    // Setter nettsiden til å oppdatere for å lage en animasjon 
-   /*  requestAnimationFrame(oppdater) */
 
+
+    // Legger til lyttere til spillknapper: 
     addEventListener("keydown", flyttForsvar)
-
     addEventListener("keyup",skyt) // Forskjellen på keyup og keydown er at man må slippe også, kan ikke skyte automatisk 
-
     restartBtn.addEventListener("click", restart)
-
     volumBtn.addEventListener("click", volumKontroll)
-
     lagreBtn.addEventListener("click", lagre)
-
     leggTilBtn.addEventListener("click", leggTil)
 
-    /* startBtn.classList.add("gjem") */
-    restartBtn.classList.remove("gjem")
-    restartBtn.classList.add("vis")
-
-    volumBtn.classList.remove("gjem")
-    volumBtn.classList.add("vis")
-
+    //SetInterval gjør at funksjonen oppdater kjøres hvert 0.02 sekund (oppgis i millisekund). Det er dette som simulerer "animasjonen"
     setInterval(oppdater, 1000/50)
 }
 
+// Kaller på gamestart for å starte spillet
 gameStart()
 
 
 
-
-setInterval(angrepSkudd,500) // skjer en gang i sekundet
+//Setter angrepet til å skyte to ganger i sekundet
+setInterval(angrepSkudd,500)
 
 
 // Lager en uendelig loop med oppateringer (animasjon)
@@ -172,9 +158,7 @@ function oppdater(){
 
     context.clearRect(0,0,brett.width, brett.height) // Klarerer lerretet for hver gang 
 
-        // Tegner blokk så lenge de ikke er truffet av angrep 
-
-
+        // Tegner blokkade så lenge de ikke er truffet av angrep 
         if(angriperDreptArr.length >=5 && window.innerWidth>= feltStr*kolonner){
             context.fillStyle = "white"
             context.font = "16px courier" 
@@ -193,74 +177,72 @@ function oppdater(){
             } 
         }
        
-
-        
-
     //Oppdaterer bildet til forsvar
     context.drawImage(forsvar.bilde, forsvar.x, forsvar.y,forsvar.bredde,forsvar.hoyde) 
     
+    // Definerer variabel for å sjekke om angrepet treffer vegg
     let kollisjonVegg = false
  
      for(let i = 0; i < angrepArr.length; i++){
         let angriper = angrepArr[i];
-
-        if (angriper.x + angriper.bredde >= brett.width || angriper.x <= 0) {
+         if (angriper.x + angriper.bredde >= brett.width || angriper.x <= 0) {
             kollisjonVegg = true 
         }
     }
-
+    //HVis angrepet treffer veggen vil angriperne få motsatt fart 
     if (kollisjonVegg){
         angriperFart *= -1
     }
+
     // Oppdaterer posisjonen til angriper + flytter rad nærmere
-    for(let i = 0; i < angrepArr.length; i++){
+    for(let i = 0; i < angrepArr.length; i++){ //Tegner kun angrepArr.length fordi vi fjerner en for hver vi dreper 
         let angriper = angrepArr[i]
         angriper.x += angriperFart
-
-        if(kollisjonVegg){
+        if(kollisjonVegg){ //Flytter angrepet en rad nærmere forsvarer når det treffer veggen
             angriper.y += angriper.hoyde
         }
-
-
         context.drawImage(angriper.bilde, angriper.x,angriper.y,angriper.bredde,angriper.hoyde)
     }
 
         // Kuler fra forsvar
-        for (let i = 0; i< skuddArr.length; i++){
-            let skudd = skuddArr[i];
-                skudd.y += skudd.v; 
+    for (let i = 0; i< skuddArr.length; i++){ //Itererer gjennom skuddArr og tegner hvert skudd
+        let skudd = skuddArr[i];
+            skudd.y += skudd.v; 
             context.fillStyle= "white";
             context.fillRect(skudd.x,skudd.y,skudd.bredde,skudd.hoyde)
 
-            // Kulenes kollisjon med angrep 
-
+            // skuddenes kollisjon med angrep 
             for (let j = 0; j < angrepArr.length; j++){
                let angriper = angrepArr[j];
                 if(!skudd.brukt && angriper.levende && kollisjon(skudd, angriper)){
-                    skudd.brukt = true
-                    angriper.levende = false
+                    skudd.brukt = true 
+                    angriper.levende = false //Setter angriper til ikke levende/død
                     angrepArr.splice(j, 1) // fjerner elemetet som blir skutt 
                     angriper.antall -= 1
-                    poeng += 100
-                    angriperDreptArr.push(1)
+                    poeng += 100 //Legger til 100 i poengscore 
+                    angriperDreptArr.push(1) //LEgger til 1 i angreperdreptArr, Viktig for Bombecount
                     let treffLyd = new Audio("../lyder/kjoh.mp3")
                     if(volum){                    
                     treffLyd.play()}
 
                 }
             }
+
+            //Kulenes kollisjon med Blokkade 
             for(let i = 0; i< skuddArr.length; i++){
                 let skudd = skuddArr[i]
                 if(!odelagt && ((blokk1.x< skudd.x && skudd.x < blokk1.x + blokk1.bredde) || (blokk2.x < skudd.x && skudd.x < blokk2.x + blokk2.bredde))){ // HVis det skytes ett skudd som vil treffe blokk kan man ikke skyte igjen før skuddet er ute av spillet
                     removeEventListener("keyup",skyt)
+                    removeEventListener("click",skytMobil)
                 }
                 if(!odelagt && kollisjon(skudd,blokk1) || !odelagt && kollisjon(skudd,blokk2)){
-                    skudd.v *= -1
+                    skudd.v *= -1 //Snur farten når skuddet treffer blokkade 
                 }
                 if(skudd.y > brettHoyde || skudd.y < 0){ //Dersom skuddet truffet blokkade ikke treffer forsvarer resettes skuddv, og dersom skuddet "snidder" blokkade og fortsetter videre. 
                     skudd.brukt = true
                     skudd.v *= -1
                     addEventListener("keyup",skyt)
+                    addEventListener("click", skytMobil)
                 }
                 if(kollisjon(skudd,forsvar) && skudd.v>0){
                     skudd.brukt = true // Fjerner skuddet etter kollisjon 
@@ -268,24 +250,27 @@ function oppdater(){
                 }
                 if(odelagt){
                     addEventListener("keyup",skyt) //fjerner bugg hvis man skyter når angriperne ødelegger blokk
+                    addEventListener("click", skytMobil)
                 }
             }
  }
 
+        //Tegner hver bombe og oppdaterer posisjon
         for (let i = 0; i < bombeArr.length; i++){
             let bombe = bombeArr[i];
                 bombe.y += bombeV; 
                 context.fillStyle= "white";
                 context.fillRect(bombe.x,bombe.y,bombe.bredde,bombe.hoyde)
 
+                //Bombenes kollisjon med angriper
                 for (let j = 0; j < angrepArr.length; j++){
                     let angriper = angrepArr[j];
                      if(!bombe.brukt && angriper.levende && kollisjon(bombe, angriper)){
                          bombe.brukt = true
                          angriper.levende = false
-                         angrepArr.splice(j, 3) // fjerner elemetet som blir skutt 
+                         angrepArr.splice(j, 3) // Fjerner tre elementer fra AngrepArr
                          angriper.antall -= 3
-                         poeng += 300
+                         poeng += 300 // Legger til 3 poeng
                          angriperDreptArr.push(3)
                          let treffLyd = new Audio("../lyder/kjoh.mp3")
                          if(volum){
@@ -293,6 +278,8 @@ function oppdater(){
                          }
                      }
                  }
+
+                 //Bombes kollisjon med Blokkade
                  for(let i = 0; i< bombeArr.length; i++){
                      let bombe = bombeArr[i]
                      if(!odelagt && kollisjon(bombe,blokk1) || !odelagt && kollisjon(bombe,blokk2)){
@@ -309,23 +296,23 @@ function oppdater(){
                  }
             }
 
-
-
                 // Kuler fra angrep 
                 for (let i = 0; i < angriperSkuddArr.length; i++){
                     let angriperSkudd = angriperSkuddArr[i];
-                    if(gameOver === false && !angriperSkudd.brukt){                    
-                    angriperSkudd.y += angriperSkuddv; 
-                    context.fillStyle= "white";
-                    context.fillRect(angriperSkudd.x,angriperSkudd.y,angriperSkudd.bredde,angriperSkudd.hoyde)}
+                    if(gameOver === false && !angriperSkudd.brukt){ //Så lenge det ikke er Gameover og skuddene fortsatt er i spillet skal de tegnes.                  
+                        angriperSkudd.y += angriperSkuddv; 
+                        context.fillStyle= "white";
+                        context.fillRect(angriperSkudd.x,angriperSkudd.y,angriperSkudd.bredde,angriperSkudd.hoyde)}
 
+
+                    //Stopper skuddene når de treffer blokkaden     
                     if(!odelagt && kollisjon(angriperSkudd,blokk1) || !odelagt && kollisjon(angriperSkudd, blokk2)){
                         angriperSkudd.brukt = true
                     }
 
                 }
 
-                // Sjekker om angrep treffer forsvarer
+                // Sjekker om angrep treffer forsvarer og setter gameOver til å være true
                 for(let i = 0; i< angriperSkuddArr.length; i++){
                     let angriperSkudd = angriperSkuddArr[i]
                     if(kollisjon(angriperSkudd,forsvar)){
@@ -336,28 +323,27 @@ function oppdater(){
 
     
 
-        // Fjerner kulene etter at de er blitt brukt 
+        // Fjerner Forsvarerskudd etter at de er blitt brukt (GarbageCollecting)
         while(skuddArr.length > 0 && (skuddArr[0]. brukt || skuddArr[0].y < 0)){
            skuddArr.shift() //Fjerner det første elementet i arrayet.  
         }
 
-         // Fjerner kulene etter at de er blitt brukt 
+         // Fjerner AngriperSkudd etter at de er blitt brukt 
         while(angriperSkuddArr.length > 0 && (angriperSkuddArr[0].brukt || angriperSkuddArr[0].y > brettHoyde)){
                     angriperSkuddArr.shift() //Fjerner det første elementet i arrayet.  
                  }
 
-         // Fjerner kulene etter at de er blitt brukt 
+         // Fjerner bombene etter at de er blitt brukt 
         while(bombeArr.length > 0 && (bombeArr[0].brukt || bombeArr[0].y > brettHoyde)){
                     bombeArr.shift() //Fjerner det første elementet i arrayet.  
                  }
          
          
-            //nytt level
+        //nytt level som gjør angripergruppen større, men med visse begrensninger
         if(angrepArr.length == 0){
             if(angrepK<6){
                 angrepK = angrepK + 1;
             }   
- //Dette må forstås, gjøres for at det angrepet ikke skal gå utenfor lerret. maks antall blir 16/2-2 = 6
             if(angrepR<5){
                 angrepR = angrepR + 1 // Maks rader blir 16-4
             }
@@ -385,59 +371,43 @@ function oppdater(){
             gameOver = true
         }
          
-
-                if(!odelagt){
+        // Tegner Blokkade så lenge de ikke er odelagte
+        if(!odelagt){
             context.fillStyle = "#6600cc"
             context.fillRect(blokk1.x ,blokk1.y,blokk1.bredde,blokk1.hoyde)
             context.fillRect(blokk2.x ,blokk2.y,blokk2.bredde,blokk2.hoyde)
         }
 
-        end()
+        //Funksjon som sjekker om Gameover variabelen har blitt true
+        end() 
     
     }  
 
+    //Andre funksjoner: 
+
+    //Hvis den Globale GameOver-variabelen har blitt endret til true 
     function end (){
         if(gameOver){
-            gameOverScreen()
+            gameOverScreen() //Kaller Gameoverscreen funksjon om Gameover = true 
         }
     }
 
 
 
 
-// funksjon som flytter forsvaret
-function flyttForsvar(e){
-    if(e.code == "ArrowLeft" && forsvar.x - forsvar.v >= 0 || venstreBtn.clicked && forsvar.x - forsvar.v >= 0){
-        forsvar.x  -= forsvar.v
-
-    }
-    else if(e.code == "ArrowRight" && forsvar.x + forsvar.v + forsvar.bredde <= brett.width){
+    // funksjon som flytter forsvaret
+    function flyttForsvar(e){ 
+        if(e.code == "ArrowLeft" && forsvar.x - forsvar.v >= 0){ //Sjekker om pilvenstre trykket på og flytter forsvaret
+        forsvar.x  -= forsvar.v}
+    
+        else if(e.code == "ArrowRight" && forsvar.x + forsvar.v + forsvar.bredde <= brett.width){ //Sjekker om pilhoyre blir trykket på og flytter forsvar
         forsvar.x = forsvar.x + forsvar.v
     }
 }
 
-function flyttForsvarVenstre(){
-    if( forsvar.x - forsvar.v >= 0){
-        forsvar.x  -= forsvar.v
-    }
-}
-function flyttForsvarHoyre(){
-    if(forsvar.x + forsvar.v + forsvar.bredde <= brett.width){
-        forsvar.x = forsvar.x + forsvar.v
-    }
-}
-
-function sjekk(e){
-    console.log(e.location)
-}
-
-
-
+//Funksjon som generer skudd
 function skyt(e){
-/*      if(gameOver){
-        ferdig()
-    }  */
-    if (e.code == "Space"){
+    if (e.code == "Space"){ //Trykker spilleren på space dannes det et skuddobjekt som tegnes i oppdater. 
         let skudd ={
             x : forsvar.x + forsvar.bredde*15/32, //hvorfor 
             y : forsvar.y,
@@ -452,9 +422,10 @@ function skyt(e){
         }
 
  
-        skuddArr.push(skudd)
+        skuddArr.push(skudd) // Dette som gjør at skuddene tegnes
     }
 
+    //Hvis brukeren trykker på Enter og lengden på angriperdreptArr med andre ord hvor mange du har drept er over 5 legges det til et bombeelement i bombearr som tegnes i oppdater. 
     if(e.code == "Enter" && angriperDreptArr.length >= 5){
             let bombe = {
                 x : forsvar.x + forsvar.bredde*15/32, //hvorfor 
@@ -468,6 +439,20 @@ function skyt(e){
             angriperDreptArr = []
         }
     }
+
+    //Funksjoner til mobilkompatibilitet: 
+    // Funksjoner som gjør det samme bare med designerte skjermknapper
+function flyttForsvarVenstre(){
+    if( forsvar.x - forsvar.v >= 0){
+        forsvar.x  -= forsvar.v
+    }
+}
+function flyttForsvarHoyre(){
+    if(forsvar.x + forsvar.v + forsvar.bredde <= brett.width){
+        forsvar.x = forsvar.x + forsvar.v
+    }
+}
+// Funksjon som gjør det samme som skuyt på pc bare at det kalles med en skytknapp på skjerm 
     function skytMobil(){
         let skudd ={
             x : forsvar.x + forsvar.bredde*15/32, //hvorfor 
@@ -486,8 +471,10 @@ function skyt(e){
         skuddArr.push(skudd)
 
 }
+
+// Funksjon som generer skudd fra angrepet
 function angrepSkudd(){  
-        let tilfeldig = Math.floor(Math.random()*angrepArr.length) 
+        let tilfeldig = Math.floor(Math.random()*angrepArr.length) //Velger en tilfeldig angriper fra angreparrayet som skal skytes fra
         let angriperSkudd ={
         x : angrepArr[tilfeldig].x + forsvar.bredde*15/32,
         y : angrepArr[tilfeldig].y,
@@ -499,7 +486,7 @@ function angrepSkudd(){
 
 }
 
-
+// Generell kollisjonsfunksjon som sjekker x og y koordinater til to objekter
 function kollisjon(a,b){
     return a.x < b.x + b.bredde && // øverste venstre hjørne til a treffer ikke øverste høyre hjørne i b 
     a.x + a.bredde > b.x && // øverste høyrne hjørne i a går forbi øverste venstre hjørne b 
@@ -508,19 +495,23 @@ function kollisjon(a,b){
 
 }
 
+// Funksjon til Gameover 
 function gameOverScreen(){
-    lagreBtn.classList.remove("gjem")
+
+    //Viser lagreKnapp
+    lagreBtn.classList.remove("gjem") 
     lagreBtn.classList.add("vis")
 
-
+    //Fjerner muligheten til å fremdeles kunne skyte 
     removeEventListener("keydown", flyttForsvar)
     removeEventListener("keyup",skyt) // Forskjellen på keyup og keydown er at man må slippe også, kan ikke skyte automatisk
     skytBtn.removeEventListener("click", skytMobil)
 
-    //fyll skjermen svart
+    //fyller skjermen svart
     context.fillStyle = "#000000";
     context.fillRect(0,0,brett.width,brett.height)
-    //game over 
+    //Tegner melding 
+
     context.textAlign = "center"
     context.font = "50px Courier";
     context.fillStyle = "#FFFFFF"
@@ -535,15 +526,12 @@ function gameOverScreen(){
 
 function restart(){
      window.location.reload()
-
-
-
 }
 
 function volumKontroll(){
     if(!volum){
         volum = true
-        volumBtn.innerHTML = `<i class="fa-solid fa-volume-high"></i>`
+        volumBtn.innerHTML = `<i class="fa-solid fa-volume-high"></i>` //Endrer volumikon basert på om lydenb står på eller ikke 
     }
     else{
         volum = false
@@ -551,7 +539,9 @@ function volumKontroll(){
     }
 }
 
+
 function lagre(){
+    //VIser inputfeltet når brukeren har trykket på lagreknappen 
     inputEl.classList.remove("gjem")
     inputEl.classList.add("vis")
     leggTilBtn.classList.remove("gjem")
@@ -560,8 +550,8 @@ function lagre(){
 
 }
 
-
 function leggTil(){
+    // Lagrer Navn og PoengScore i Local Storage 
     localStorage.setItem(`${navnEl.value}`, poeng)
     leggTilBtn.innerHTML= `Din score ble lagt til!`
 } 
