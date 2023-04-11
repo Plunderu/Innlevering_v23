@@ -9,7 +9,7 @@ let annetEl = document.querySelector("textarea")
 
 let submitBtn = document.querySelector("button[type=submit]")
 
-// Bestillingsobjekt 
+// Tilbakemeldingsobjekt
 tilbakemelding = {
     kjonn : "",
     fant: "",
@@ -18,17 +18,16 @@ tilbakemelding = {
 }
 
 
-submitBtn.addEventListener("click", sendBestilling)
+submitBtn.addEventListener("click", sendTilbakemelding)
 
 //funksjon som sender bestillingen 
-function sendBestilling(e){
+function sendTilbakemelding(e){
     console.log(ferdighetEls.length)
     e.preventDefault()
     // e er hendelsesobjektet 
     // Vanlig å bruke evt eller event istedenfor e 
     console.log("sender bestilling")
 
-    // sjekker pizzabunn
     for(let i = 0; i<kjonnEls.length; i++){
         if(kjonnEls[i].checked){
             tilbakemelding.kjonn = kjonnEls[i].value

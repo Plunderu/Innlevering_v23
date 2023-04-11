@@ -257,7 +257,7 @@ function oppdater(){
                 if(!odelagt && kollisjon(skudd,blokk1) || !odelagt && kollisjon(skudd,blokk2)){
                     skudd.v *= -1
                 }
-                if(skudd.y > brettHoyde){ //Dersom skuddet truffet blokkade ikke treffer forsvarer resettes skuddv 
+                if(skudd.y > brettHoyde || skudd.y < 0){ //Dersom skuddet truffet blokkade ikke treffer forsvarer resettes skuddv, og dersom skuddet "snidder" blokkade og fortsetter videre. 
                     skudd.brukt = true
                     skudd.v *= -1
                     addEventListener("keyup",skyt)
