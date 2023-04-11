@@ -54,6 +54,8 @@ function sendTilbakemelding(e){
 
 
     localStorage.setItem(`Tilbakemelding`, JSON.stringify(tilbakemelding))
+
+    submitBtn.innerHTML = "Takk for din tilbakemelding"
 }
 
 
