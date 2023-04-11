@@ -243,7 +243,7 @@ function oppdater(){
                     angriper.antall -= 1
                     poeng += 100
                     angriperDreptArr.push(1)
-                    let treffLyd = new Audio("/lyder/kjoh.mp3")
+                    let treffLyd = new Audio("../lyder/kjoh.mp3")
                     if(volum){                    
                     treffLyd.play()}
 
@@ -283,12 +283,11 @@ function oppdater(){
                      if(!bombe.brukt && angriper.levende && kollisjon(bombe, angriper)){
                          bombe.brukt = true
                          angriper.levende = false
-                         angrepR-=1
                          angrepArr.splice(j, 3) // fjerner elemetet som blir skutt 
                          angriper.antall -= 3
                          poeng += 300
                          angriperDreptArr.push(3)
-                         let treffLyd = new Audio("/lyder/kjoh.mp3")
+                         let treffLyd = new Audio("../lyder/kjoh.mp3")
                          if(volum){
                             treffLyd.play()
                          }
@@ -447,7 +446,7 @@ function skyt(e){
             hoyde : feltStr/2,
             brukt : false // sjekker om kula treffer angrep
         }
-        let skytLyd = new Audio("/lyder/pew.mp3")
+        let skytLyd = new Audio("../lyder/pew.mp3")
         if(volum){
             skytLyd.play()
         }
@@ -478,7 +477,7 @@ function skyt(e){
             hoyde : feltStr/2,
             brukt : false // sjekker om kula treffer angrep
         }
-        let skytLyd = new Audio("/lyder/pew.mp3")
+        let skytLyd = new Audio("../lyder/pew.mp3")
         if(volum){
             skytLyd.play()
         }
@@ -515,7 +514,8 @@ function gameOverScreen(){
 
 
     removeEventListener("keydown", flyttForsvar)
-    removeEventListener("keyup",skyt) // Forskjellen på keyup og keydown er at man må slippe også, kan ikke skyte automatisk 
+    removeEventListener("keyup",skyt) // Forskjellen på keyup og keydown er at man må slippe også, kan ikke skyte automatisk
+    skytBtn.removeEventListener("click", skytMobil)
 
     //fyll skjermen svart
     context.fillStyle = "#000000";
