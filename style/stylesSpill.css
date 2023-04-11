@@ -156,6 +156,10 @@ body{
 
 @media(max-width: 512px){
     /* endrer grid til å være på to kolonner */
+
+    body{
+        touch-action: manipulation; 
+    }
     #brett{
         margin-top: 0%;
     }
@@ -165,6 +169,7 @@ body{
     #lagre{
         width: 100%;
     }
+
 }
 
 
