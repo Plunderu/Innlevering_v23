@@ -112,6 +112,7 @@ function gameStart(){
         brettBredde = window.innerWidth
         blokk1.x -=30
         blokk2.x -= (512 - (window.innerWidth +30))
+        angriperFart /= 2
         kontrollBtns.classList.add("vis")
         kontrollBtns.classList.remove("gjem")
         hoyreBtn.addEventListener("click",flyttForsvarHoyre)
@@ -140,7 +141,7 @@ function gameStart(){
     lagreBtn.addEventListener("click", lagre)
     leggTilBtn.addEventListener("click", leggTil)
 
-    //SetInterval gjør at funksjonen oppdater kjøres hvert 0.02 sekund (oppgis i millisekund). Det er dette som simulerer "animasjonen"
+    //SetInterval gjør at funksjonen oppdater kjøres hvert 20 millisekund (oppgis i millisekund). Det er dette som simulerer "animasjonen"
     setInterval(oppdater, 1000/50)
 }
 
@@ -289,7 +290,7 @@ function oppdater(){
                          bombe.brukt = true
                          bombeV *= -1
                      }
-                     if(kollisjon(bombe,forsvar) && bombe.v>0){
+                     if(kollisjon(bombe,forsvar) && bombeV >0){
                          bombe.brukt = true // Fjerner skuddet etter kollisjon 
                          gameOver = true 
                      }

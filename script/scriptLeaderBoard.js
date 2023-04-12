@@ -4,7 +4,7 @@ const leaderBoardEl = document.querySelector("#leaderBoard")
 // Funksjon som henter ut all lagring fra Local Storage, Bortsett fra Tilbakemelding
 function allLagring() {
     let arkiv = [] // Definerer et tomt array 
-    let keys = Object.keys(localStorage) // Setter at keys er Keyen til Localstorage Objektet
+    let keys = Object.keys(localStorage) // Keys blir et array med alle objektenes key
     let key
 
         for (let i = 0; key = keys[i]; i++) { // Itererer gjennom Local Sotrage 
@@ -23,9 +23,9 @@ let brukerArr = allLagring()
 // Funksjon som sorterer et array på det andre index. 
 
 function sorter(array) {
-    array.sort(function(a, b) { //Uten denne funksjonen ville sorter funksjonen sortert local storagen etter alfabetisk rekkefølge, grunnet det er det som er første index i arrayet. 
-        return b[1] - a[1];
-     });
+    array.sort(function(a, b) { //Uten denne funksjonen ville sorter funksjonen sortert      local storagen etter alfabetisk rekkefølge, grunnet det er det som er første index i arrayet. 
+        return b[1] - a[1];}
+        );
     
     }
     
