@@ -20,7 +20,7 @@ body{
 #kontrollerMobil{
     width: 100%;
 }
-
+/* Definerer en knappklasse som gir felles styling til alle knapper */
 .knapp{
     font-size: 50px;
     width: 50%;
@@ -31,6 +31,9 @@ body{
     cursor: pointer;
 }
 
+/* Har også spesifikk styling til hver knapp der det trengs */
+
+/* Spesifikk styling til mobilkontroller */
 #hoyre{
     width: 50%;
     border-bottom: 2.5px solid black;
@@ -50,13 +53,13 @@ body{
     border-left: 2.5px solid black;
 }
 
- #restartVolum{
+/* Container til restartknaopp og volumknapp */
+#restartVolum{  
     display: flex;
     justify-content: center;
     width: 512px;
 }
 
- 
  #restart{
     width: 50%;
     border-bottom: 2.5px solid black;
@@ -71,7 +74,6 @@ body{
     border-right: 5px solid black;
     border-left: 2.5px solid black;
 }
-
 
 
 #lagre{
@@ -94,10 +96,7 @@ body{
 
 }
 
-#footer{
-    width: 1vw;
-}
-
+/* Legger til felles hover til knappene */
 .knapp:hover{
     cursor: pointer;
     background-color: #9900cc;
@@ -112,7 +111,7 @@ body{
     display: flex;
 }
 
-@media(max-width: 512px){
+@media(max-width: 512px){ 
 
     body{
         touch-action: manipulation; /* Fikser slik at det ikke zoomes inn når man dobbeltrykker på mobil */

@@ -9,13 +9,12 @@ function allLagring() {
 
         for (let i = 0; key = keys[i]; i++) { // Itererer gjennom Local Sotrage 
             if(keys[i] !== "Tilbakemelding"){ //Fjerner tilbakemeldingslagringen fra leaderboard
-                arkiv.push([key, Number(localStorage.getItem(key))]); // Pusher lagring i Local Storage inn i arkivArray som et array inne i et array der key er første index og poengsum andre
+                arkiv.push([key, Number(localStorage.getItem(key))]); // Pusher lagring i Local Storage inn i arkivArray som et array inne i et array der key er første index og poengsum andre (flerdimensjonelt array)
             }
             
         }
         return arkiv;
     }
-
 
 
 let brukerArr = allLagring()

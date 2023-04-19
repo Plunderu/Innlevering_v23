@@ -5,7 +5,7 @@ let ferdighetEls = document.querySelectorAll("option")
 let annetEl = document.querySelector("textarea")
 let submitBtn = document.querySelector("button[type=submit]")
 
-// Tilbakemeldingsobjekt
+// Tilbakemeldingsobjekt som fylles med inputen
 tilbakemelding = {
     kjonn : "",
     fant: "",
@@ -36,7 +36,7 @@ function sendTilbakemelding(){
 
     tilbakemelding.fant = fantArr
 
-    
+
     for(let i = 0; i < ferdighetEls.length; i++){
         if(ferdighetEls[i].selected){
             tilbakemelding.ferdighet = ferdighetEls[i].value

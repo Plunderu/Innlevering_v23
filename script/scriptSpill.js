@@ -1,4 +1,4 @@
-
+//Denne koden er basert på tou
 // Definerer  Spillbrettet: 
 let feltStr = 32;
 let rader = 16; 
@@ -109,12 +109,17 @@ function gameStart(){
 
     //Sjekker om bredden til skjermen er mindre enn bredden til spillcanvas. Dersom den er det får mobilkontrollene klassen show. 
     if(window.innerWidth<=brettBredde){
+        //Setter spillbredden til skjermbredde
         brettBredde = window.innerWidth
-        blokk1.x -=30
+        // Flytter blokkader
+        blokk1.x -=30 
         blokk2.x -= (512 - (window.innerWidth +30))
+        //Setter ned farten for å gjøre det enklere
         angriperFart /= 2
+        //Viser mobilkontroller
         kontrollBtns.classList.add("vis")
         kontrollBtns.classList.remove("gjem")
+        //Legger til lyttere til mobilkontrollene 
         hoyreBtn.addEventListener("click",flyttForsvarHoyre)
         venstreBtn.addEventListener("click",flyttForsvarVenstre)
         skytBtn.addEventListener("click", skytMobil)
@@ -152,22 +157,41 @@ gameStart()
 
 //Setter angrepet til å skyte to ganger i sekundet
 setInterval(angrepSkudd,500)
-
+ 
 
 // Lager en uendelig loop med oppateringer (animasjon)
 function oppdater(){
+//Funksjon inspirert fra stackoverflow som fjerner problemet med at nettsiden scrolles ned når det trykkes på space
+//https://stackoverflow.com/questions/22559830/html-prevent-space-bar-from-scrolling-page
+window.onkeydown = function(e) { 
+    // Denne if-testen er nødvendig for å kunne skrive inn brukernavn med mellomrom for å lagre score
+    if(inputEl.classList == "gjem"){
+        return !(e.keyCode == 32);
+    }
+    else{
+        console.log("Mellomrom")
+    }
+}
+
 
     context.clearRect(0,0,brett.width, brett.height) // Klarerer lerretet for hver gang 
 
-        // Tegner blokkade så lenge de ikke er truffet av angrep 
+        // Dersom man har drept fem angripere og spillet ikke spilles på mobil kan man skyte en bombe
         if(angriperDreptArr.length >=5 && window.innerWidth>= feltStr*kolonner){
             context.fillStyle = "white"
             context.font = "16px courier" 
             context.fillText("Press Enter", brettBredde - 117, brettHoyde-20) 
         }    
 
+        // Tegner Blokkade så lenge de ikke er odelagte
+        if(!odelagt){ //Om blokkadene ikke er ødelagte tegnes blokkadene 
+            context.fillStyle = "#6600cc"
+            context.fillRect(blokk1.x ,blokk1.y,blokk1.bredde,blokk1.hoyde)
+            context.fillRect(blokk2.x ,blokk2.y,blokk2.bredde,blokk2.hoyde)
+            }
         
-        // Sjekker om noen av angriperne treffer blokkade og fjerner den 
+        
+        // Sjekker om noen av angriperne treffer blokkade og setter odelagt = true 
         for(let i = 0; i < angrepArr.length; i++){
             let angriper = angrepArr[i]
              if(kollisjon(blokk1,angriper)){
@@ -183,7 +207,8 @@ function oppdater(){
     
     // Definerer variabel for å sjekke om angrepet treffer vegg
     let kollisjonVegg = false
- 
+        
+    //Dersom angrepet treffer veggen vil kollisjonvegg endres til true
      for(let i = 0; i < angrepArr.length; i++){
         let angriper = angrepArr[i];
          if (angriper.x + angriper.bredde >= brett.width || angriper.x <= 0) {
@@ -216,7 +241,7 @@ function oppdater(){
             for (let j = 0; j < angrepArr.length; j++){
                let angriper = angrepArr[j];
                 if(!skudd.brukt && angriper.levende && kollisjon(skudd, angriper)){
-                    skudd.brukt = true 
+                    skudd.brukt = true  
                     angriper.levende = false //Setter angriper til ikke levende/død
                     angrepArr.splice(j, 1) // fjerner elemetet som blir skutt 
                     angriper.antall -= 1
@@ -325,7 +350,7 @@ function oppdater(){
     
 
         // Fjerner Forsvarerskudd etter at de er blitt brukt (GarbageCollecting)
-        while(skuddArr.length > 0 && (skuddArr[0]. brukt || skuddArr[0].y < 0)){
+        while(skuddArr.length > 0 && (skuddArr[0].brukt || skuddArr[0].y < 0)){
            skuddArr.shift() //Fjerner det første elementet i arrayet.  
         }
 
@@ -372,13 +397,6 @@ function oppdater(){
             gameOver = true
         }
          
-        // Tegner Blokkade så lenge de ikke er odelagte
-        if(!odelagt){
-            context.fillStyle = "#6600cc"
-            context.fillRect(blokk1.x ,blokk1.y,blokk1.bredde,blokk1.hoyde)
-            context.fillRect(blokk2.x ,blokk2.y,blokk2.bredde,blokk2.hoyde)
-        }
-
         //Funksjon som sjekker om Gameover variabelen har blitt true
         end() 
     
@@ -409,6 +427,7 @@ function oppdater(){
 //Funksjon som generer skudd
 function skyt(e){
     if (e.code == "Space"){ //Trykker spilleren på space dannes det et skuddobjekt som tegnes i oppdater. 
+        e.preventDefault()
         let skudd ={
             x : forsvar.x + forsvar.bredde*15/32, //hvorfor 
             y : forsvar.y,

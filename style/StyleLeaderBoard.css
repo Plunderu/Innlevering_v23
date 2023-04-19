@@ -26,6 +26,8 @@ th, td {
 thead{
     background:#6600cc ;
 }
+
+/* Setter at annenhver rad får annenhver farge med nth-child */
 tbody{
     background-color: #9900cc;
 }

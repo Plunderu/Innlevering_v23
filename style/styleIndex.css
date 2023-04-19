@@ -42,7 +42,7 @@ h2{
   }
   
   /*  Overlay kode tatt fra dcode   */
-  
+  /* Dette er stylingen som skal vises når man holder musepekeren over bakgrunnsbildet */
   .mainforsidebilde_overlay {
     position: absolute;
       top: 0;
@@ -55,21 +55,18 @@ h2{
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      opacity: 0;
+      opacity: 0; /* Settes originalt til å være opacity 0 som vil si at den ikke vises */
       transition: opacity 0.25s;
     font-size: 50px;
   
   }
   
+
   .mainforsidebilde_overlay:hover {
-      opacity: 1;
+      opacity: 1; /* Når man legger muspekerern på bakgrunnsbildet settes mainforsidebilde_overlay til opacity: 1. Dette vil si at mainforsidebilde_overlay vises. */
   }
   
-  
-  
- 
-
-
+/* Gjør nettsiden responsiv med media query */
 @media(max-width: 600px) {
     main{
       margin-left:6%;
